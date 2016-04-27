@@ -1,0 +1,26 @@
+Server
+	files
+	init
+		request -> sendListFile -> request -> sendFile
+		requestEnd -> closeConnection
+
+Client
+	init
+		sendRequest -> responseFiles -> chooseFile
+		sendCloseConnection
+		
+// Send
+File file = new File("/home/vinicius/arquivo_a_ser_transferido.zip");
+FileInputStream fileIn = new FileInputStream(file);
+while ((bytesRead = fileIn.read(cbuffer)) != -1) {
+   socketOut.write(cbuffer, 0, bytesRead);
+   socketOut.flush();
+}		
+
+// Receive
+File file = new File("/home/vinicius/nome_do_arquivo_recebido.zip");
+FileOutputStream fos = new FileOutputStream(file);
+while ((bytesRead = is.read(cbuffer)) != -1) {
+   fos.write(cbuffer, 0, bytesRead);
+   fos.flush();
+}
